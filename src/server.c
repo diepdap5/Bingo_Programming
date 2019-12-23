@@ -193,7 +193,20 @@ void client_handler(void *p_client) {
             }
             if (strcmp(recv_buffer, "BINGO!") == 0){
                 sprintf(send_buffer, "%s is the WINNER!", np->name);
-            } else {
+            } 
+            if (strcmp(recv_buffer, "Show achievements") == 0)
+            {
+            	getDatatoList(&list, element);
+            	list.cur = list.root;
+            	while (list.cur != NULL)  
+			    {   
+			        if (strcmp(list.cur->element.player, np->name) == 0)  
+			            sprintf(send_buffer, "*** %s's achievements ***\n\tGame win: %d\n\tGame lose: %d", np->name, list.cur->element.point_win, list.cur->element.point_lose);
+			    		list.cur = list.cur->next;
+			    }  
+
+            }
+            else {
                 sprintf(send_buffer, "%s choose %s",np->name,recv_buffer);
                 if (lastest_player != np->data){
                     sprintf(send_buffer, "%s choose %s",np->name, recv_buffer);
